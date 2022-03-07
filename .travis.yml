@@ -7,7 +7,5 @@ install:
 
 script:
   - kedro run --pipeline dp
-  - kedro run --pipeline ds
-  - kedro run --pipeline dv
   - kedro run
  
