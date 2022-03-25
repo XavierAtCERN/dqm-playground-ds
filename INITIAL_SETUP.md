@@ -101,5 +101,3 @@ cd project
 
 kedro viz --no-browser
 ```
-
-

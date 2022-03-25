@@ -10,17 +10,19 @@ plt.style.use([hep.style.ROOT, hep.style.firamath])
 hep.rcParams.label.data = True
 hep.rcParams.label.paper = False
 
+
 def plot_one_time_serie(df, variable):
     print(f"Plotting time serie for variable {variable}")
 
     f, ax = plt.subplots()
     hep.cms.label(loc=0)
-    plt.scatter(df['lumi'].tolist(), df[variable].tolist())
-    plt.xlabel('lumisection')
+    plt.scatter(df["lumi"].tolist(), df[variable].tolist())
+    plt.xlabel("lumisection")
     plt.ylabel(variable)
     plt.tight_layout()
-    
+
     return f
+
 
 def plot_one_correlation(df, variable1, variable2):
     print(f"Plotting correlation between {variable1} and {variable2}")
@@ -33,6 +35,7 @@ def plot_one_correlation(df, variable1, variable2):
     plt.tight_layout()
 
     return f
+
 
 def plot_time_series(data: pd.DataFrame) -> MatplotlibWriter:
     """Plot time serie for all variables.
@@ -52,6 +55,7 @@ def plot_time_series(data: pd.DataFrame) -> MatplotlibWriter:
 
     return list_of_figures
 
+
 def plot_correlations(data: pd.DataFrame) -> MatplotlibWriter:
     """Plot all pairwise correlations.
     Args:
@@ -63,8 +67,10 @@ def plot_correlations(data: pd.DataFrame) -> MatplotlibWriter:
     print(list_of_variables)
 
     list_of_figures = []
-    for i in range(len(list_of_variables)-1):
-        new_figure = plot_one_correlation(data, list_of_variables[i], list_of_variables[i+1])
+    for i in range(len(list_of_variables) - 1):
+        new_figure = plot_one_correlation(
+            data, list_of_variables[i], list_of_variables[i + 1]
+        )
         list_of_figures.append(new_figure)
 
     return list_of_figures

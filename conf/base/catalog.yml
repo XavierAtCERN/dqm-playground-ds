@@ -51,6 +51,10 @@ raw_pixel_layer_2:
   backend: pickle
   layer: raw
 
+mean_image:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/mean_image.pkl
+
 aggregated_properties:
   type: pandas.ParquetDataSet
   filepath: data/02_intermediate/aggregated_properties.pq

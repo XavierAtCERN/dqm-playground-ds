@@ -18,6 +18,6 @@ The current structure can be divided in three steps:
 - data science
 - data visualization (dummy)
 
-![Current structure](./images/kedro_current_pipeline_1.png?raw=true "Current structure")
+![Current structure](./images/kedro_current_pipeline_3.png?raw=true "Current structure")
 
 Another pipeline could be added to interface directly the website's API with the data science framework.
