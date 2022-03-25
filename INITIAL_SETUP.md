@@ -67,3 +67,39 @@ __Starting with the data visualization pipeline__
 
 The overall idea would be to create a new task on the website (list of runs/lumisections to develop a strategy + list of runs/lumisections to apply the strategy). The data science pipeline (aka this repository) would then allow to produce the predictions from each strategy and re-upload to the website. However, it would be good to produce few plots within the pipeline to check that the pipeline ran successfully.
 
+### Visualising the pipelines
+
+Visualisation can be achieved using Kedro-Viz. In order to install kedro-viz:
+````bash
+pip install kedro-viz
+```
+
+To run kedro-viz:
+````bash
+kedro viz
+```
+
+The command will run a server on http://127.0.0.1:4141. To run kedro-viz on lxplus with a no-browser option, edit .ssh/config on your personal computer with the following lines:
+```
+Host lxplus*
+    HostName lxplus.cern.ch
+    User your_username
+    ForwardX11 yes
+    ForwardAgent yes
+    ForwardX11Trusted yes
+
+Host *_f
+    LocalForward localhost:4141 localhost:4141
+    ExitOnForwardFailure yes
+```
+
+Then log to lxplus, move to the top of the kedro repository and run the command:
+````bash
+ssh lxplus_f
+
+cd project
+
+kedro viz --no-browser
+```
+
+
