@@ -13,16 +13,17 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 func=plot_time_series,
                 inputs="aggregated_properties",
-                outputs=None,
+                outputs="time_series_plots",
                 name="plot_time_series_node",
             ),
             node(
                 func=plot_correlations,
                 inputs="aggregated_properties",
-                outputs=None,
+                outputs="correlation_plots",
                 name="plot_correlations_node",
             ),
         ],
         namespace="data_visualization",
         inputs="aggregated_properties",
+        outputs=["time_series_plots", "correlation_plots"]
     )
