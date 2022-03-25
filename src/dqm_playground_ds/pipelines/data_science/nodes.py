@@ -20,9 +20,10 @@ def compute_summary_statistics(data: pd.DataFrame) -> pd.DataFrame:
         dataframe with run + lumi + mean + rms + ...
     """
     print("Running - Computing summary statistics")
+    # TODO Move map creation to processing
     data["map"] = data["map"].apply(
         lambda x: ast.literal_eval(x)
-    )  # should be done in processing...
+    )
     data["mean"] = data["map"].apply(lambda x: np.array(x).mean())
     data["std"] = data["map"].apply(lambda x: np.array(x).std())
     df_summary_statistics = data[["run", "lumi", "mean", "std"]].copy()
@@ -39,12 +40,13 @@ def compute_geometrical_properties(data: pd.DataFrame) -> pd.DataFrame:
         dataframe with run + lumi + geometrical properties
     """
     print("Running - Computing geometrical properties")
+    # TODO Move map and image creation to processing
     data["map"] = data["map"].apply(
         lambda x: ast.literal_eval(x)
-    )  # should be done in processing
+    )
     data["image"] = data["map"].apply(
         lambda x: np.reshape(x, (202, 302))[1:201, 1:301]
-    )  # should be done in processing
+    )
     data["center_phi"] = data["image"].apply(
         lambda x: scipy.ndimage.measurements.center_of_mass(x)[0]
     )
@@ -56,21 +58,37 @@ def compute_geometrical_properties(data: pd.DataFrame) -> pd.DataFrame:
     return df_geometrical_properties
 
 
-def compute_rmse(data: pd.DataFrame) -> pd.DataFrame:
+def compute_mean_image(data: pd.DataFrame) -> np.array:
     """Compute mean picture over a run..
+
+    Args:
+        data: Dataframe containing 2D histograms.
+    Returns:
+        mean image over a run
+    """
+    # TODO Move to pytorch tensor
+    print("Running - computing mean image")
+    data["map"] = data["map"].apply(lambda x: ast.literal_eval(x))
+    data["image"] = data["map"].apply(lambda x: np.reshape(x, (202, 302))[1:201, 1:301])
+    tensor_image = np.array(data["image"].tolist())
+    print(f"Tensor shape is {tensor_image.shape}")
+    mean_image = tensor_image.mean(axis=0)
+    return mean_image
+
+def compute_rmse(data: pd.DataFrame, mean_image: np.array) -> pd.DataFrame:
+    """Compute RMSE between each 2D histogram and the mean of the 2D histograms
 
     Args:
         data: Dataframe containing 2D histograms.
     Returns:
         dataframe with run + lumi + rmse
     """
+    # TODO Move to pytorch tensor
     print("Running - computing RMSE")
     data["map"] = data["map"].apply(lambda x: ast.literal_eval(x))
     data["image"] = data["map"].apply(lambda x: np.reshape(x, (202, 302))[1:201, 1:301])
     tensor_image = np.array(data["image"].tolist())
     print(f"Tensor shape is {tensor_image.shape}")
-    mean_image = tensor_image.mean(axis=0)
-    print(f"Mean image shape is {mean_image.shape}")
     rmse = np.sqrt(np.mean(np.subtract(tensor_image, mean_image), axis=(1, 2)) ** 2)
     print(f"RMSE with broadcasting is {rmse}")
     data["rmse"] = rmse

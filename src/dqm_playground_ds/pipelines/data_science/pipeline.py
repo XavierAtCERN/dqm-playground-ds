@@ -4,6 +4,7 @@ from kedro.pipeline.modular_pipeline import pipeline
 from .nodes import (
     compute_summary_statistics,
     compute_geometrical_properties,
+    compute_mean_image,
     compute_rmse,
     aggregate_properties,
 )
@@ -26,8 +27,14 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="compute_geometrical_properties_node",
             ),
             node(
-                func=compute_rmse,
+                func=compute_mean_image,
                 inputs="preprocessed_raw_pixel_layer_1",
+                outputs="mean_image",
+                name="compute_mean_image",
+            ),
+            node(
+                func=compute_rmse,
+                inputs=["preprocessed_raw_pixel_layer_1", "mean_image"],
                 outputs="images_rmse",
                 name="compute_rmse_node",
             ),
