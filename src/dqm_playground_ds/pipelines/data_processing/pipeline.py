@@ -22,5 +22,5 @@ def create_pipeline(**kwargs) -> Pipeline:
         ],
         namespace="data_processing",
         inputs=["raw_pixel_layer_1", "raw_pixel_layer_2"],
-        outputs=["preprocessed_raw_pixel_layer_1", "preprocessed_raw_pixel_layer_2"]
+        outputs=["preprocessed_raw_pixel_layer_1", "preprocessed_raw_pixel_layer_2"],
     )

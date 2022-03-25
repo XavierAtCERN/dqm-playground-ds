@@ -7,6 +7,7 @@ from kedro.pipeline import Pipeline, node, pipeline
 
 from .nodes import plot_time_series, plot_correlations
 
+
 def create_pipeline(**kwargs) -> Pipeline:
     return pipeline(
         [
@@ -25,5 +26,5 @@ def create_pipeline(**kwargs) -> Pipeline:
         ],
         namespace="data_visualization",
         inputs="aggregated_properties",
-        outputs=["time_series_plots", "correlation_plots"]
+        outputs=["time_series_plots", "correlation_plots"],
     )
