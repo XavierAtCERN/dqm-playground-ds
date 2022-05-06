@@ -41,29 +41,29 @@
 
 raw_pixel_layer_1:
   type: pickle.PickleDataSet
-  filepath: data/01_raw/Run_316187_0_clusterposition_PXLayer_1.pkl
+  filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data/01_raw/Run_316187_0_clusterposition_PXLayer_1.pkl
   backend: pickle
   layer: raw
 
 raw_pixel_layer_2:
   type: pickle.PickleDataSet
-  filepath: data/01_raw/Run_316187_0_clusterposition_PXLayer_2.pkl
+  filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data/01_raw/Run_316187_0_clusterposition_PXLayer_2.pkl
   backend: pickle
   layer: raw
 
 mean_image:
   type: pickle.PickleDataSet
-  filepath: data/06_models/mean_image.pkl
+  filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data/06_models/mean_image.pkl
 
 aggregated_properties:
   type: pandas.ParquetDataSet
-  filepath: data/02_intermediate/aggregated_properties.pq
+  filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data/02_intermediate/aggregated_properties.pq
   layer: intermediate
 
 time_series_plots:
   type: matplotlib.MatplotlibWriter
-  filepath: data/08_reporting/time_series/
+  filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data/08_reporting/time_series/
 
 correlation_plots:
   type: matplotlib.MatplotlibWriter
-  filepath: data/08_reporting/correlations/ 
+  filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data/08_reporting/correlations/ 
