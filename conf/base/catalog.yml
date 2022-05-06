@@ -51,9 +51,34 @@ raw_pixel_layer_2:
   backend: pickle
   layer: raw
 
+preprocessed_raw_pixel_layer_1:
+  type: pandas.ParquetDataSet
+  filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data/02_intermediate/preprocessed_raw_pixel_layer_1.pq
+
+preprocessed_raw_pixel_layer_2:
+  type: pandas.ParquetDataSet
+  filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data/02_intermediate/preprocessed_raw_pixel_layer_2.pq
+  layer: intermediate
+
+summary_statistics:
+  type: pandas.ParquetDataSet
+  filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data/02_intermediate/summary_statistics.pq
+  layer: intermediate
+
+geometrical_properties:
+  type: pandas.ParquetDataSet
+  filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data/02_intermediate/geometrical_properties.pq
+  layer: intermediate
+
 mean_image:
   type: pickle.PickleDataSet
   filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data/06_models/mean_image.pkl
+  backend: pickle
+
+images_rmse:
+  type: pandas.ParquetDataSet
+  filepath: /eos/user/x/xcoubez/dqm_playground_shared/kedro/data//02_intermediate/images_rmse.pq
+  layer: intermediate
 
 aggregated_properties:
   type: pandas.ParquetDataSet
