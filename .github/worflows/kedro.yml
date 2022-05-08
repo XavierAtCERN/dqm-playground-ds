@@ -35,4 +35,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --ignore=E50,F401,F403
     - name: Run Kedro
       run: |
-        kedro run
+        kedro run --env=ci
