@@ -143,6 +143,13 @@ docker images
 docker history dqm-playground-ds:latest
 ```
 
+Using python buster leads to very large layers for pip install:
+```
+<missing>      2 hours ago   RUN /bin/sh -c pip install -r /tmp/requireme…   1.45GB    buildkit.dockerfile.v0
+<missing>      2 hours ago   COPY src/requirements.txt /tmp/requirements.…   587B      buildkit.dockerfile.v0
+```
+Moving to slim (```kedro docker build --base-image="python:3.8-slim"```) doesn't change the situation... Dive report shows a 22MB gain from removing some files from the layers, could be done in the future but negligible with respect to the current image size.
+
 Upload to a registry (Docker Hub for now)
 ```bash
 docker tag dqm-playground-ds <DockerID:xavier2c>/dqm-playground-ds

@@ -3,7 +3,7 @@ FROM $BASE_IMAGE
 
 # install project requirements
 COPY src/requirements.txt /tmp/requirements.txt
-RUN pip install -r /tmp/requirements.txt && rm -f /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt && rm -f /tmp/requirements.txt
 
 # add kedro user
 ARG KEDRO_UID=999
