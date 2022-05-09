@@ -70,12 +70,12 @@ The overall idea would be to create a new task on the website (list of runs/lumi
 ### Visualising the pipelines
 
 Visualisation can be achieved using Kedro-Viz. In order to install kedro-viz:
-````bash
+```bash
 pip install kedro-viz
 ```
 
 To run kedro-viz:
-````bash
+```bash
 kedro viz
 ```
 
@@ -94,10 +94,23 @@ Host *_f
 ```
 
 Then log to lxplus, move to the top of the kedro repository and run the command:
-````bash
+```bash
 ssh lxplus_f
 
 cd project
 
 kedro viz --no-browser
 ```
+
+### Adding Continuous Integration
+
+Continuous Integration is added using Github Actions. In order to keep a catalog with full eos path and another one for ci, a new [conf folder](https://kedro.readthedocs.io/en/stable/kedro_project_setup/configuration.html#additional-configuration-environments) is created under ```conf/ci``` and used in the [CI workflow](https://github.com/XavierAtCERN/dqm-playground-ds/actions/workflows/kedro.yml):
+```
+kedro run --env=ci
+```
+
+### Making project into a Docker image
+
+Instructions on how to proceed to create a Docker image can be found [here](https://github.com/kedro-org/kedro-plugins/tree/main/kedro-docker). Lxplus doesn't allow the use of docker, could be related to [this](https://www.reddit.com/r/docker/comments/7y2yp2/why_is_singularity_used_as_opposed_to_docker_in/). Two solutions are therefore available to make it into a Docker image:
+- make a local copy
+- [create image using Github Actions](https://event-driven.io/en/how_to_buid_and_push_docker_image_with_github_actions/)
