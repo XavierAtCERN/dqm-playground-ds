@@ -114,3 +114,42 @@ kedro run --env=ci
 Instructions on how to proceed to create a Docker image can be found [here](https://github.com/kedro-org/kedro-plugins/tree/main/kedro-docker). Lxplus doesn't allow the use of docker, could be related to [this](https://www.reddit.com/r/docker/comments/7y2yp2/why_is_singularity_used_as_opposed_to_docker_in/). Two solutions are therefore available to make it into a Docker image:
 - make a local copy
 - [create image using Github Actions](https://event-driven.io/en/how_to_buid_and_push_docker_image_with_github_actions/)
+
+__Starting from a local copy__
+
+Install Docker Desktop (for Mac in my case). Daemon is running by default.
+
+Install kedro-docker:
+```
+pip install kedro-docker
+```
+
+Initialize the files and build the image:
+```
+kedro docker init
+kedro docker build
+```
+
+In case an error appears during the build, try login out of Docker and back in.
+
+[Optional] Analyse the image using Dive:
+```
+kedro docker dive
+```
+
+Check that the image has been created and check size of each layer - to learn more, head over to [here](https://www.thorsten-hans.com/determine-the-size-of-docker-image-layers/).
+```
+docker images
+docker history dqm-playground-ds:latest
+```
+
+Upload to a registry (Docker Hub for now)
+```bash
+docker tag dqm-playground-ds <DockerID:xavier2c>/dqm-playground-ds
+docker push <DockerID:xavier2c>/dqm-playground-ds
+```
+
+### Creating an Argo workflow
+
+Instructions on how to proceed to create an Argo workflow (with the aim of deploying to Openshift) can be found [here](https://kedro.readthedocs.io/en/stable/deployment/argo.html).
+
