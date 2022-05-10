@@ -63,7 +63,7 @@ jobs:
           # Note: tags has to be all lower-case
           tags: |
             xavier2c/dqm-playground-ds:latest 
-            ghcr.io/XavierAtCERN/dqm-playground-ds:latest
+            ghcr.io/xavieratcern/dqm-playground-ds:latest
           # build on feature branches, push only on main branch
           push: ${{ github.ref == 'refs/heads/main' }}
 
