@@ -58,9 +58,7 @@ jobs:
       - name: push to Docker Hub and GitHub Container Registry
         uses: docker/build-push-action@v2
         with:
-          # relative path to the place where source code with Dockerfile is located
-          context: ./src/
-          # Note: tags has to be all lower-case
+          context: ./
           tags: |
             xavier2c/dqm-playground-ds:latest 
             ghcr.io/xavieratcern/dqm-playground-ds:latest
