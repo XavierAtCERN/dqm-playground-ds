@@ -156,6 +156,10 @@ docker tag dqm-playground-ds <DockerID:xavier2c>/dqm-playground-ds
 docker push <DockerID:xavier2c>/dqm-playground-ds
 ```
 
+In order to make the image creation automatic via Github Actions, a [new workflow](https://github.com/XavierAtCERN/dqm-playground-ds/blob/main/.github/workflows/build-and-publish.yml) is created and triggered if the tests are successfully passing. The image is pushed to Docker Hub and can be found [here](https://hub.docker.com/repository/docker/xavier2c/dqm-playground-ds).
+
+Once done, the docker image can be pulled by Openshift, the only remaining task is then to add eos storage as a volume in order to allow the IO. In order to do so, instructions can be found [here](https://paas.docs.cern.ch/3._Storage/eos/#through-the-web-ui_1).
+
 ### Creating an Argo workflow
 
 Instructions on how to proceed to create an Argo workflow (with the aim of deploying to Openshift) can be found [here](https://kedro.readthedocs.io/en/stable/deployment/argo.html).
