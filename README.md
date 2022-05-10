@@ -1,6 +1,7 @@
 # DQM Playground - Data Science Framework
 
 [![Kedro](https://github.com/XavierAtCERN/dqm-playground-ds/actions/workflows/kedro.yml/badge.svg)](https://github.com/XavierAtCERN/dqm-playground-ds/actions/workflows/kedro.yml)
+[![Docker](https://github.com/XavierAtCERN/dqm-playground-ds/actions/workflows/build-and-publish.yml/badge.svg)](https://github.com/XavierAtCERN/dqm-playground-ds/actions/workflows/build-and-publish.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## Project overview
