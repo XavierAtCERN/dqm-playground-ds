@@ -40,10 +40,10 @@
 # https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
 
 run_histograms:
-  type: api.APIDataSet
+  type: dqm_playground_ds.extras.datasets.tuned_API_dataset.TunedAPIDataSet
   url: https://ml4dqm-playground.web.cern.ch/api/run_histograms/
-  headers:
-    Authorization: dqm_playground_token
+  credentials: dqm_playground_token
+  headers: credentials
 
 raw_pixel_layer_1:
   type: pickle.PickleDataSet
