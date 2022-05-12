@@ -22,11 +22,11 @@ def register_pipelines() -> Dict[str, Pipeline]:
     data_visualization_pipeline = dv.create_pipeline()
 
     return {
-        "__default__": data_processing_pipeline
-        + data_science_pipeline
-        + data_visualization_pipeline,
         "de": data_extraction_pipeline,
         "dp": data_processing_pipeline,
         "ds": data_science_pipeline,
         "dv": data_visualization_pipeline,
+        "__default__": data_processing_pipeline
+        + data_science_pipeline
+        + data_visualization_pipeline,
     }
