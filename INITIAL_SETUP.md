@@ -2,7 +2,7 @@
 
 ### Creating a virtual environment
 
-```
+```bash
 conda create -n dqm_playground_ds python=3.8
 conda activate dqm_playground_ds
 conda install pip
@@ -10,14 +10,14 @@ conda install pip
 
 ### Installing kedro
 
-```
+```bash
 pip3 install kedro
 kedro info
 ```
 
 ### Creating a new project
 
-```
+```bash
 kedro new --starter=spaceflights
 > project_name: DQM Playground DS
 > repo_name: dqm-playground-ds
@@ -26,7 +26,7 @@ kedro new --starter=spaceflights
 
 ### Installing dependencies
 
-```
+```bash
 cd dqm-playground-ds
 pip install -r src/requirements.txt
 ```
@@ -35,13 +35,13 @@ pip install -r src/requirements.txt
 
 Copy file from eos to local data files (would be nice to use direct call to API in the future)
 
-```
+```bash
 rm data/01_raw/*
 cp /eos/user/x/xcoubez/SWAN_projects/ml4dqm-return/starting_data_analysis/pickles/Run_316187_ALL_clusterposition_PXLayer_* data/01_raw/.
 ```
 
 Add to the catalog
-```
+```bash
 vim conf/base/catalog.yml
 ```
 
@@ -58,7 +58,7 @@ Two additional pipelines could be useful:
 - a data visualization pipeline producing time series, correlation plots...
 
 In order to create the new pipelines
-```
+```bash
 kedro pipeline create data_extraction
 kedro pipeline create data_visualization
 ```
@@ -80,7 +80,7 @@ kedro viz
 ```
 
 The command will run a server on http://127.0.0.1:4141. To run kedro-viz on lxplus with a no-browser option, edit .ssh/config on your personal computer with the following lines:
-```
+```bash
 Host lxplus*
     HostName lxplus.cern.ch
     User your_username
@@ -105,7 +105,7 @@ kedro viz --no-browser
 ### Adding Continuous Integration
 
 Continuous Integration is added using Github Actions. In order to keep a catalog with full eos path and another one for ci, a new [conf folder](https://kedro.readthedocs.io/en/stable/kedro_project_setup/configuration.html#additional-configuration-environments) is created under ```conf/ci``` and used in the [CI workflow](https://github.com/XavierAtCERN/dqm-playground-ds/actions/workflows/kedro.yml):
-```
+```bash
 kedro run --env=ci
 ```
 
@@ -120,12 +120,12 @@ __Starting from a local copy__
 Install Docker Desktop (for Mac in my case). Daemon is running by default.
 
 Install kedro-docker:
-```
+```bash
 pip install kedro-docker
 ```
 
 Initialize the files and build the image:
-```
+```bash
 kedro docker init
 kedro docker build
 ```
@@ -133,21 +133,22 @@ kedro docker build
 In case an error appears during the build, try login out of Docker and back in.
 
 [Optional] Analyse the image using Dive:
-```
+```bash
 kedro docker dive
 ```
 
 Check that the image has been created and check size of each layer - to learn more, head over to [here](https://www.thorsten-hans.com/determine-the-size-of-docker-image-layers/).
-```
+```bash
 docker images
 docker history dqm-playground-ds:latest
 ```
 
 Using python buster leads to very large layers for pip install:
-```
+```bash
 <missing>      2 hours ago   RUN /bin/sh -c pip install -r /tmp/requireme…   1.45GB    buildkit.dockerfile.v0
 <missing>      2 hours ago   COPY src/requirements.txt /tmp/requirements.…   587B      buildkit.dockerfile.v0
 ```
+
 Moving to slim (```kedro docker build --base-image="python:3.8-slim"```) doesn't change the situation... Dive report shows a 22MB gain from removing some files from the layers, could be done in the future but negligible with respect to the current image size.
 
 Upload to a registry (Docker Hub for now)
@@ -159,6 +160,27 @@ docker push <DockerID:xavier2c>/dqm-playground-ds
 In order to make the image creation automatic via Github Actions, a [new workflow](https://github.com/XavierAtCERN/dqm-playground-ds/blob/main/.github/workflows/build-and-publish.yml) is created and triggered if the tests are successfully passing. The image is pushed to Docker Hub and can be found [here](https://hub.docker.com/repository/docker/xavier2c/dqm-playground-ds).
 
 Once done, the docker image can be pulled by Openshift, the only remaining task is then to add eos storage as a volume in order to allow the IO. In order to do so, instructions can be found [here](https://paas.docs.cern.ch/3._Storage/eos/#through-the-web-ui_1).
+
+## Adding extraction pipeline
+
+The extraction pipeline aims at getting data using the website API. The API is protected and requires token authentication via headers. An example code can be found below to access the RunHistograms information:
+```python3
+import requests
+from requests.auth import HTTPBasicAuth
+
+import pandas as pd
+
+endpoint = "https://ml4dqm-playground.web.cern.ch/api/run_histograms/"
+
+response = requests.get(endpoint, headers={'Authorization': 'Token <token>'})
+
+print(response.text)
+```
+
+The goal is to use the APIDataSet extra dataset from Kedro to load the data. Unfortunately, providing credentials through the headers is not supported. After discussion on Kedro Discord channel, opting for the easiest solution: creating a TunedAPIDataSet which allows loading the credentials to the header.
+
+In order for the CI workflow to keep running, a dummy credential is created inside the ```ci``` configuration in order to provide a fake ```dqm_playground_token```.
+
 
 ### Creating an Argo workflow
 

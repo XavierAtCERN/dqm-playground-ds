@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .nodes import get_run_histograms 
+from .nodes import get_run_histograms
 
 
 def create_pipeline(**kwargs) -> Pipeline:

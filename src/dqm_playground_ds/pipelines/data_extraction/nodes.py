@@ -2,6 +2,7 @@ from kedro.extras.datasets.api import APIDataSet
 
 import pandas as pd
 
+
 def get_run_histograms(run_histograms: APIDataSet) -> pd.DataFrame:
     """Get run histograms using API
     Args:
