@@ -1,8 +1,6 @@
 from setuptools import find_packages, setup
 
-entry_point = (
-    "dqm-playground-ds = dqm_playground_ds.__main__:main"
-)
+entry_point = "dqm-playground-ds = dqm_playground_ds.__main__:main"
 
 
 # get the dependencies and installs
