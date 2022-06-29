@@ -13,6 +13,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+HOST = "0.0.0.0"
+PORT = 8888
+
 # Map command to subprocess to run
 # TODO: check how to run kedro programmatically instead of
 # running it as a subprocess
@@ -70,7 +73,7 @@ async def handle_client(reader, writer):
 
 
 async def main():
-    server = await asyncio.start_server(handle_client, "127.0.0.1", 8888)
+    server = await asyncio.start_server(handle_client, HOST, PORT)
 
     addrs = ", ".join(str(sock.getsockname()) for sock in server.sockets)
     logger.info(f"Serving on {addrs}")
